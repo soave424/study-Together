@@ -4,6 +4,8 @@ canvas.width = 800;
 canvas.height = 800;
 ctx.linewidth = 2;
 
+let isPainting = false;
+
 //flatuicolors.com
 const colors = [
 	"#1abc9c",
@@ -15,21 +17,25 @@ const colors = [
 	"#f39c12",
 ];
 
-function onClick(e) {
-	ctx.beginPath();
-    ctx.moveTo(0, 0);
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    ctx.strokeStyle = color;
-	ctx.lineTo(e.offsetX, e.offsetY);
-	ctx.stroke();
+function onMove(e) {
+	if (isPainting) {
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+        return;
+    }
+    ctx.moveTo(e.offsetX, e.offsetY);
 }
-canvas.addEventListener("mousemove", onClick);
 
-// 좌표 실시간 표시.
-function canvasXY(e) {
-	const canvasXY = document.querySelector("#canvasXY");
-	canvasXY.innerText = `(${e.offsetX}, ${e.offsetY})`;
-	canvasXY.style.position = "fixed";
-	canvasXY.style.zindex = "100";
+function startPainting() {
+    isPainting = true;
 }
-canvas.addEventListener("mousemove", canvasXY);
+
+function cancelPainting() {
+    isPainting = false;
+}
+
+canvas.addEventListener("mousemove", onMove);
+canvas.addEventListener("mousedown", startPainting);
+canvas.addEventListener("mouseup", cancelPainting);
+canvas.addEventListener("mouseleave", cancelPainting);
+
