@@ -15,6 +15,22 @@ const colorOptionList = [];
 const eraser = document.getElementById("eraser");
 let colorFixer = false;
 const clear = document.getElementById("clear");
+const btn = document.querySelectorAll("button");
+
+clear.addEventListener("click", (e) => {
+  let x = e.pageX - e.target.offsetLeft;
+  let y = e.pageY - e.target.offsetTop;
+  let ripples = document.createElement("span");
+  let color = "#" + Math.floor(Math.random() * 0xffffff).toString(16);
+  ripples.style.left = x + "px";
+  ripples.style.top = y + "px";
+  ripples.style.borderColor = color;
+  clear.appendChild(ripples);
+
+  setTimeout(() => {
+    ripples.remove();
+  }, 2000);
+});
 
 for (i = 0; i < colorOption.length; i++) {
   colorOptionList.push(colorOption[i].dataset.color);
@@ -74,6 +90,18 @@ eraser.addEventListener("click", (e) => {
     ctx.lineWidth = parseInt(lineWidth.value);
     e.target.innerText = "Eraser";
   }
+  let x = e.pageX - e.target.offsetLeft;
+  let y = e.pageY - e.target.offsetTop;
+  let ripples = document.createElement("span");
+  let color = "#" + Math.floor(Math.random() * 0xffffff).toString(16);
+  ripples.style.left = x + "px";
+  ripples.style.top = y + "px";
+  ripples.style.borderColor = color;
+  eraser.appendChild(ripples);
+
+  setTimeout(() => {
+    ripples.remove();
+  }, 2000);
 });
 
 // 다 지워
