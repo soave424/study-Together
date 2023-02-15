@@ -9,8 +9,3 @@ body {
   justify-content: center;
   align-items: center;
 }
-
-#canvasXY {
-  position: fixed;
-  z-index: 100;
-}
