@@ -1,13 +1,56 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="./style.css" rel="stylesheet" />
-    <title>Document</title>
+    <title>Meme Maker</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <script src="js/main.js"></script>
+    <div class="color-options">
+      <input id="color" type="color" />
+      <div class="color-option" style="background-color: #1abc9c" data-color="#1abc9c"></div>
+      <div class="color-option" style="background-color: #3498db" data-color="#3498db"></div>
+      <div class="color-option" style="background-color: #34495e" data-color="#34495e"></div>
+      <div class="color-option" style="background-color: #27ae60" data-color="#27ae60"></div>
+      <div class="color-option" style="background-color: #8e44ad" data-color="#8e44ad"></div>
+      <div class="color-option" style="background-color: #f1c40f" data-color="#f1c40f"></div>
+      <div class="color-option" style="background-color: #e74c3c" data-color="#e74c3c"></div>
+      <div class="color-option" style="background-color: #95a5a6" data-color="#95a5a6"></div>
+      <div class="color-option" style="background-color: #d35400" data-color="#d35400"></div>
+      <div class="color-option" style="background-color: #2ecc71" data-color="#2ecc71"></div>
+      <div class="color-option" style="background-color: #e67e22" data-color="#e67e22"></div>
+      <div class="color-option" style="background-color: #e67e22" data-color="#e67e22"></div>
+      
+    </div>
+    <canvas></canvas>
+    <div class="btns">
+      <div>
+        <input id="line-width" type="range" min="1" max="10" value="5" step="0.1" style="width: 85%;" />
+        <input class="valuetext" id="line-width-text" type="text" value="5" style="width: 40px;" />
+      </div>
+      <button id="mode-btn">🎨채우기</button>
+      <button id="destroy-btn">💣전체초기화</button>
+      <button id="eraser-btn">🧱지우기</button>
+      <label for="file">
+        📸사진 추가
+        <input type="file" accept="image/*" id="file" />
+      </label>
+      <div id="font-select">
+          <label><span style="font:1em Jua;"><input id="fontname" type="radio" name="fontname" value="Jua" checked>주아체</span></label>
+          <label><span style="font:1em Dongle;"><input id="fontname" type="radio" name="fontname" value="Dongle">동글체</span></label>
+          <label><span style="font:1em Gothic A1;"><input id="fontname" type="radio" name="fontname" value="Gothic A1">고딕A1체</span></label>
+          <label><span style="font:1em Dokdo;"><input id="fontname" type="radio" name="fontname" value="Dokdo">독도체</span></label>
+        <div>
+          <input type="range" id="fontsize" value="50" min="30" max="100" step="5" style="width: 75%;" />
+          <input class="valuetext" id="font-size-text" type="text" value="50" style="width: 50px; font-size:16px " />
+        </div>
+
+        <input type="text" placeholder="글자 입력" id="text" />
+      </div>
+      <button id="save">💾이미지 저장</button>
+    </div>
+    <script src="app.js"></script>
   </body>
 </html>
