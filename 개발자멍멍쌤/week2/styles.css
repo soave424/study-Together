@@ -40,8 +40,8 @@ body {
     align-items: center;
 }
 .color-option {
-    width:50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     cursor: pointer;
     border:2px solid white;
@@ -57,8 +57,13 @@ body {
     width: 50px;
     height: 35px;
     background: url(./on2.png) no-repeat 100% 100%;
+    background-size: 100%;
 }
 
+.img-load-button {
+    width: 50px;
+    height: 25px;
+}
 
 input#color {
     background-color: white;
@@ -84,6 +89,10 @@ button:hover {
 }
 
 input#file {
+    display: none;
+}
+
+input#file2 {
     display: none;
 }
 
