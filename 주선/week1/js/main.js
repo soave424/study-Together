@@ -1,5 +1,7 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
+canvas.width = 800;
+canvas.height = 800;
 
 function drawStar(x, y, color) {
   ctx.beginPath();
@@ -19,7 +21,6 @@ function drawStar(x, y, color) {
   if (color === undefined) {
     ctx.stroke();
   } else {
-    console.log(color);
     ctx.fillStyle = color;
     ctx.strokeStyle = color;
     ctx.fill();
@@ -41,7 +42,6 @@ function drawHeart(x, y, r, color) {
     ctx.fill();
   }
 }
-drawStar(50, 10);
-drawStar(200, 10, 'red');
-drawHeart(700, 50, 10);
-drawHeart(350, 200, 50, 'yellow');
+drawStar(400, 400);
+drawStar(40, 40, 'blue');
+drawHeart(200, 200, 30, 'yellow');
