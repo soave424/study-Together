@@ -83,7 +83,7 @@ eraser.addEventListener("click", (e) => {
   if (colorFixer === false) {
     e.target.innerText = "Draw";
     colorFixer = true;
-    ctx.lineWidth = 10;
+    ctx.lineWidth = 30;
     ctx.strokeStyle = "white";
   } else {
     colorFixer = false;
