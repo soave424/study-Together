@@ -1,3 +1,5 @@
+const imgLoadButton = document.getElementById('file2');
+const imgButton = document.getElementById('img-button');
 const fontName = document.getElementsByName('fontname');
 const fontSize = document.getElementById('fontsize');
 const fontSizeText = document.getElementById('font-size-text');
@@ -26,12 +28,18 @@ ctx.lineWidth = lineWidth.value;
 ctx.lineCap = "round";
 let isPainting = false;
 let isFilling = false;
+let isbrush = true;
 
 function onMove(event) {
+  //console.log(isPainting,isbrush);
   if (isPainting) {
-    ctx.lineTo(event.offsetX, event.offsetY);
-    ctx.stroke();
-    return;
+    if (isbrush) {
+      ctx.lineTo(event.offsetX, event.offsetY);
+      ctx.stroke();
+      return;
+    } else {
+      ctx.drawImage(imgElement,event.offsetX, event.offsetY);
+    }
   }
   ctx.moveTo(event.offsetX, event.offsetY);
 }
@@ -57,15 +65,16 @@ function onColorClick(event) {
   ctx.strokeStyle = colorValue;
   ctx.fillStyle = colorValue;
   color.value = colorValue;
+  isbrush = true;
 }
 
 function onModeClick() {
   if (isFilling) {
     isFilling = false;
-    modeBtn.innerText = "Fill";
+    modeBtn.innerText = "🎨채우기";
   } else {
     isFilling = true;
-    modeBtn.innerText = "Draw";
+    modeBtn.innerText = "🧨그리기";
   }
 }
 
@@ -83,7 +92,7 @@ function onDestroyClick() {
 function onEraserClick() {
   ctx.strokeStyle = "white";
   isFilling = false;
-  modeBtn.innerText = "Fill";
+  modeBtn.innerText = "🎨채우기";
 }
 
 function onFileChange(event) {
@@ -140,6 +149,27 @@ fileInput.addEventListener("change", onFileChange);
 saveBtn.addEventListener("click", onSaveClick);
 fontSize.addEventListener("input", onFontSize);
 lineWidth.addEventListener("change", onLineWidth);
+imgButton.addEventListener("click", onImgButton);
+imgLoadButton.addEventListener("change", onImgLoadButton);
+
+const imgElement = new Image();
+imgElement.src = "./on2.png";
+
+function onImgLoadButton(event) {
+  const file2 = event.target.files[0];
+  const url = URL.createObjectURL(file2);
+  //const image = new Image();
+  imgElement.src = url;
+  imgElement.onload = function () {
+    imgButton.style.backgroundSize = '100%';
+    imgButton.style.backgroundImage = 'url(' + imgElement.src + ')';
+  };
+}
+
+function onImgButton() {
+  isbrush = false;
+  //console.log(isbrush);
+}
 
 function onFontSize(e) {
   //console.log(e.target.value);
@@ -151,3 +181,4 @@ function onLineWidth(e) {
   //console.log(e.target.value);
   lineWidthText.value = e.target.value;
 }
+
