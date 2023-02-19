@@ -142,3 +142,35 @@ function onEraserClick() {
 }
 destroyBtn.addEventListener("click", onDestroyClick);
 eraserBtn.addEventListener("click", onEraserClick);
+
+ctx.fillRect(400, 400, 150, 150); // 기본 설정으로 사각형을 그리기
+ctx.save(); // 기본 상태를 저장하기
+
+ctx.fillStyle = "#09F"; // 설정 변경하기
+ctx.fillRect(415, 415, 120, 120); // 새로운 설정으로 사각형 그리기
+
+ctx.save(); // 현재 상태 저장하기
+ctx.fillStyle = "#FFF"; // 설정 변경하기
+ctx.globalAlpha = 0.5;
+ctx.fillRect(430, 430, 90, 90); // 새로운 설정으로 사각형 그리기
+
+ctx.restore(); // 이전 상태 복원하기
+ctx.globalAlpha = 0.5;
+ctx.fillRect(445, 445, 60, 60); // 복원된 설정으로 사각형 그리기
+
+ctx.restore(); // 초기 상태를 복원하기
+ctx.fillRect(460, 460, 30, 30); // 복원된 설정으로 사각형 그리기
+
+function draw() {
+  for (var i = 0; i < 3; i++) {
+    for (var j = 0; j < 3; j++) {
+      ctx.save();
+      ctx.fillStyle = "rgb(" + 51 * i + ", " + (255 - 51 * i) + ", 255)";
+      ctx.rotate(10 + j * 50, 10 + i * 50);
+      ctx.fillRect(400, 400, 25, 25);
+      ctx.restore();
+    }
+  }
+}
+
+draw();
