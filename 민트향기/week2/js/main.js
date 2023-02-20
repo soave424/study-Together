@@ -1,8 +1,13 @@
+const saveBtn = document.getElementById("save") 
+const textInput = document.getElementById("text");
+const fileInput = document.getElementById("file");
 const modeBtn = document.getElementById("mode-btn");
 const destroyBtn = document.getElementById("destroy-btn");
 const earaserBtn = document.getElementById("eraser-btn");
-const colorOptions = Array.from(document.getElementsByClassName('color-option'));
-const color = document.getElementById('color');
+const colorOptions = Array.from(
+	document.getElementsByClassName("color-option")
+);
+const color = document.getElementById("color");
 const lineWidth = document.getElementById("line-width");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
@@ -31,41 +36,40 @@ const colors = [
 
 function onMove(e) {
 	if (isPainting) {
-        ctx.lineTo(e.offsetX, e.offsetY);
-        ctx.stroke();
-        return;
-    }
+		ctx.lineTo(e.offsetX, e.offsetY);
+		ctx.stroke();
+		return;
+	}
 	ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
+	ctx.moveTo(e.offsetX, e.offsetY);
 }
 
 function startPainting() {
-    isPainting = true;
+	isPainting = true;
 }
 
 function cancelPainting() {
-    isPainting = false;
+	isPainting = false;
 }
 
 function onLineWidthChange(e) {
 	ctx.lineWidth = e.target.value;
 }
 
-function onColorClick(e){
-	const colorValue = e.target.dataset.color
+function onColorClick(e) {
+	const colorValue = e.target.dataset.color;
 	ctx.strokeStyle = colorValue;
 	ctx.fillStyle = colorValue;
-	color.value =  colorValue;
-
+	color.value = colorValue;
 }
 
-function onModeClick(){
+function onModeClick() {
 	if (isFilling) {
-		isFilling = false
-		modeBtn.innerText = "Fill"
+		isFilling = false;
+		modeBtn.innerText = "Fill";
 	} else {
-		isFilling = true
-		modeBtn.innerText = "Draw"
+		isFilling = true;
+		modeBtn.innerText = "Draw";
 	}
 }
 function onChangeColor(e) {
@@ -74,7 +78,7 @@ function onChangeColor(e) {
 }
 
 function onCanvasClick() {
-	if(isFilling) {
+	if (isFilling) {
 		ctx.fillRect(0, 0, 800, 800);
 	}
 }
@@ -84,12 +88,41 @@ function onDestroyClick() {
 	ctx.fillRect(0, 0, 800, 800);
 }
 
-function onEraserClick(){
- 	ctx.strokeStyle = "white";
- 	isFilling = false;
- 	modeBtn.innerText = "Fill"
+function onEraserClick() {
+	ctx.strokeStyle = "white";
+	isFilling = false;
+	modeBtn.innerText = "Fill";
 }
 
+function onFileChange(e) {
+	const file = e.target.files[0];
+	const url = URL.createObjectURL(file);
+	const image = new Image();
+	image.src = url;
+	image.onload = function () {
+		ctx.drawImage(image, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+		fileInput.value = null;
+	};
+}
+function onDoubleClick(e) {
+	const text = textInput.value;
+	if (text !== "") {
+		ctx.save();
+		ctx.lineWidth = 1;
+		ctx.font = "58px serif"
+		ctx.fillText(text,e.offsetX, e.offsetY);
+		ctx.restore();
+	}
+}
+
+function onSaveClick() {
+	const url = canvas.toDataURL();
+	const a = document.createElement("a");
+	a.href = url;
+	a.download = "myDrawing.jpg";
+	a.click();
+}
+canvas.addEventListener("dblclick", onDoubleClick);
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
@@ -99,8 +132,10 @@ canvas.addEventListener("click", onCanvasClick);
 lineWidth.addEventListener("change", onLineWidthChange);
 color.addEventListener("change", onChangeColor);
 
-colorOptions.forEach(color => color.addEventListener("click", onColorClick));
+colorOptions.forEach((color) => color.addEventListener("click", onColorClick));
 
 modeBtn.addEventListener("click", onModeClick);
 destroyBtn.addEventListener("click", onDestroyClick);
 earaserBtn.addEventListener("click", onEraserClick);
+fileInput.addEventListener("change", onFileChange);
+saveBtn.addEventListener("click", onSaveClick);
