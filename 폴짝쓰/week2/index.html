@@ -1,13 +1,39 @@
 <!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="./style.css" rel="stylesheet" />
-    <title>Document</title>
-  </head>
-  <body>
-    <script src="js/main.js"></script>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<body>
+  <canvas></canvas>
+  <form>
+    <div>
+      <button id="circle" class="none">Circle</button>
+      <button id="triangle" class="none">Triangle</button>
+    </div>
+    <input id="linewidth" type="range" min="1" max="10">
+    <input type="color" id="colorboard">
+    <div id="palette">
+      <div class="color-palette" style="background-color: black;" data-color=""></div>
+      <div class="color-palette" style="background-color: black;" data-color=""></div>
+      <div class="color-palette" style="background-color: black;" data-color=""></div>
+      <div class="color-palette" style="background-color: black;" data-color=""></div>
+      <div class="color-palette" style="background-color: black;" data-color=""></div>
+      <div class="color-palette" style="background-color: black;" data-color=""></div>
+      <div class="color-palette" style="background-color: black;" data-color=""></div>
+      <div class="color-palette" style="background-color: black;" data-color=""></div>
+      <button id="colorsave">colorsave</button>
+    </div>
+    <div id="Reset">
+      <button id="reset">Reset</button>
+    </div>
+  </form>
+  <script src="app.js"></script>
+  <script src="app_circle.js"></script>
+  <script src="app_triangle.js"></script>
+  <script src="app_reset.js"></script>
+</body>
 </html>
