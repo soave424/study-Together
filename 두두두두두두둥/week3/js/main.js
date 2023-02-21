@@ -1,7 +1,4 @@
-// 1. 이미지 추가 기능
-// 2. 텍스트 추가 기능
-// 3. 이미지 저장 기능
-
+const saveBtn = document.getElementById("save");
 const textInput = document.getElementById("text");
 const fileInput = document.getElementById("file");
 const canvas = document.querySelector("canvas");
@@ -18,6 +15,24 @@ let colorFixer = false;
 const clear = document.getElementById("clear");
 const btn = document.querySelectorAll("button");
 
+saveBtn.addEventListener("click", (e) => {
+  let x = e.pageX - e.target.offsetLeft;
+  let y = e.pageY - e.target.offsetTop;
+  let ripples = document.createElement("span");
+  let color = "#" + Math.floor(Math.random() * 0xffffff).toString(16);
+  ripples.style.left = x + "px";
+  ripples.style.top = y + "px";
+  ripples.style.borderColor = color;
+  saveBtn.appendChild(ripples);
+  setTimeout(() => {
+    ripples.remove();
+  }, 2000);
+  const url = canvas.toDataURL();
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "myImage.png";
+  a.click();
+});
 canvas.addEventListener("dblclick", (e) => {
   const x = e.offsetX;
   const y = e.offsetY;
@@ -29,6 +44,7 @@ canvas.addEventListener("dblclick", (e) => {
     ctx.restore();
   }
 });
+
 fileInput.addEventListener("change", (e) => {
   const file = e.target.files[0];
   const url = URL.createObjectURL(file);
