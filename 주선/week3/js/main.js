@@ -48,6 +48,7 @@ function onLineWidthChange(e) {
 function onColorChange(e) {
   ctx.strokeStyle = e.target.value;
   ctx.fillStyle = e.target.value;
+  changeCursor();
 }
 function onColorClick(e) {
   const colorValue = e.target.dataset.color;
@@ -55,14 +56,17 @@ function onColorClick(e) {
   ctx.strokeStyle = e.target.style.backgroundColor; //dataset 을 사용해야하나? 그냥 css 정보 불러와도 되는데..
   ctx.fillStyle = colorValue;
   color.value = colorValue;
+  changeCursor();
 }
 function onModeClick() {
   if (isFilling) {
     isFilling = false;
     modeBtn.innerText = 'Fill';
+    changeCursor();
   } else {
     isFilling = true;
     modeBtn.innerText = 'Draw';
+    changeCursor();
   }
 }
 function onCanvasClick() {
@@ -77,10 +81,24 @@ function onDestoryClick() {
     ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
   }
 }
+function changeCursor() {
+  if (isFilling) {
+    canvas.classList.replace('eraser', 'fill');
+    canvas.classList.replace('brush', 'fill');
+  } else if (color.value == '#ffffff') {
+    canvas.classList.replace('brush', 'eraser');
+    canvas.classList.replace('fill', 'eraser');
+  } else {
+    canvas.classList.replace('eraser', 'brush');
+    canvas.classList.replace('fill', 'brush');
+  }
+}
 function onEraseClick() {
   ctx.strokeStyle = 'white';
   isFilling = false;
   modeBtn.innerText = 'Fill';
+  color.value = '#ffffff';
+  changeCursor();
 }
 function onFileChange(event) {
   const file = event.target.files[0];

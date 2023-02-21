@@ -65,15 +65,18 @@ label {
   cursor: pointer;
   border-radius: 10px;
   transition: opacity linear 0.1s;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
+
 #line-width-num {
   width: 13%;
   padding: 10px 0px;
   text-align: center;
-  background-color: royalblue;
-  color: white;
+  background-color: white;
+  color: black;
   font-weight: 500;
   border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 button:hover,
@@ -100,5 +103,17 @@ input#text {
 .brush {
   cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>🖌️</text></svg>")
       0 25,
+    auto;
+}
+
+.eraser {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>✏️</text></svg>")
+      0 5,
+    auto;
+}
+
+.fill {
+  cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg'  width='40' height='48' viewport='0 0 100 100' style='fill:black;font-size:24px;'><text y='50%'>🩸</text></svg>")
+      0 5,
     auto;
 }
