@@ -6,6 +6,8 @@ const modeBtn = document.getElementById("mode-btn");
 const destroyBtn = document.getElementById("destroy-btn");
 const eraserBtn = document.getElementById("eraser-btn");
 const fileInput = document.getElementById("file");
+const textInput = document.getElementById("text");
+const saveBtn = document.getElementById("save");
 
 const colorOptions = Array.from(
   document.getElementsByClassName("color-option")
@@ -30,7 +32,7 @@ const CANVAS_HEIGHT = 800;
 
 canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
-
+ctx.lineCap = "round";
 ctx.lineWidth = lineWidth.ariaValueMax;
 
 function onClick(event) {
@@ -113,6 +115,45 @@ function onFileChange(event) {
     fileInput.value = null;
   };
 }
+
+function onDoubleClick(event) {
+  const text = textInput.value;
+  if (text !== "") {
+    ctx.save();
+    ctx.lineWidth = 1;
+    ctx.font = "68px 'Press Start 2P'";
+    ctx.fillText(text, event.offsetX, event.offsetY);
+    ctx.restore();
+  }
+}
+
+function onSaveClick() {
+  const url = canvas.toDataURL();
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "myDrawing.png";
+  a.click();
+}
+
+function start() {
+  if (condition === "paused") {
+    startTimer();
+  } else {
+    stopTimer();
+  }
+}
+
+function stopTimer() {
+  document.getElementById("timerButton").className = "start";
+  document.getElementById("timerButton").innerHTML = "시작";
+  document.getElementById("timer").style.animationPlayState = "paused";
+  document.getElementById("mask").style.animationPlayState = "paused";
+  document.getElementById("text").style.animationPlayState = "paused";
+  condition = "paused";
+
+  document.body.style.setProperty("--grPercent", "50%");
+}
+
 canvas.addEventListener("mousemove", onMove);
 canvas.addEventListener("mousedown", onMouseDown);
 canvas.addEventListener("mouseup", cancelPainting);
@@ -125,3 +166,6 @@ modeBtn.addEventListener("click", onModeClick);
 destroyBtn.addEventListener("click", onDestroyClick);
 eraserBtn.addEventListener("click", onEraserClick);
 fileInput.addEventListener("change", onFileChange);
+canvas.addEventListener("dblclick", onDoubleClick);
+saveBtn.addEventListener("click", onSaveClick);
+document.querySelector("#timerButton").addEventListener("click", start);
