@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>meme-maker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="color-options">
+        <input type ="color" id = 'color'/>
+        <div class="color-option" style = 'background-color: #ffbe76' data-color="#ffbe76"></div>
+        <div class="color-option" style = 'background-color: #f6e58d' data-color="#f6e58d"></div>
+        <div class="color-option" style = 'background-color: #ff7979' data-color="#ff7979"></div>
+        <div class="color-option" style = 'background-color: #badc58' data-color="#badc58"></div>
+        <div class="color-option" style = 'background-color: #dff9fb' data-color="#dff9fb"></div>
+        <div class="color-option" style = 'background-color: #f0932b' data-color="#f0932b"></div>
+        <div class="color-option" style = 'background-color: #eb4d4b' data-color="#eb4d4b"></div>
+        <div class="color-option" style = 'background-color: #686de0' data-color="#686de0"></div>
+        <div class="color-option" style = 'background-color: #22a6b3' data-color="#22a6b3"></div>
+        <div class="color-option" style = 'background-color: #e056fd' data-color="#e056fd"></div>
+        </div>
+    <canvas></canvas>
+    <div class="btns">
+    <span for="line-width">붓 크기</span>
+        <input id ='line-width' type ="range" min="1" max="10" value="5"/>
+    <button id="mode-btn">🖌️채우기</button>
+    <button id="Clear-btn">💥새로 그리기</button>
+    <button id="eraser-btn">🪄지우개</button>
+    <label for ='file'>🖼️사진 추가</label>
+    <input type="file" accept="image/*" id ='file'/>
+    <div class="editor-menu">
+        <select id="select-font-name">
+          <option value="">폰트</option>
+          <option value="Black Han Sans">Black Han Sans</option>
+          <option value="Noto Sans KR">Noto Sans</option>
+          <option value="Nanum Gothic">Nanum Gothic</option>
+          <option value="Nanum Myeongjo">Nanum Myeongjo</option>
+          <option value="Nanum Pen Script">Nanum Pen Script</option>
+        </select>
+      </div>
+    <div class="font-style_option">
+        <label>
+          <input type="radio" name="font-style" value="font-style-stroke" checked />
+          <span> 테두리 </span>
+        </label>
+        <label>
+          <input type="radio" name="font-style" value="font-style-fill" />
+          <span> 채 움 </span>
+        </label>
+        <br><br><br><br>
+        <span for="font-size">글자 크기</span>
+    <br>
+        <input id ='font-size' type ="range" min="30" max="100" value="65"/>
+    <br><br><br>
+    <input type="text" placeholder="여기에 글자를 써주세요." id = 'text'/>
+    <br><br><br>
+    <button id="save">💾저 장</button>
+    </div>
+    <script src = 'app.js'></script>
+</body>
+</html>
