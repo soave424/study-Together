@@ -1,28 +1,66 @@
+const CANVAS_WIDTH2 = 600;
+const CANVAS_HEIGHT2 = 600;
+
 let canvas2, ctx2, radius2, digitalcanvas; 
 let sizevalue = 1;
 let clock2Interval;
-const realtime2 = document.getElementById('realtime');
-
-const hourvalueview2 = document.getElementById('hourvalueview');
-const minvalueview2 = document.getElementById('minvalueview');
-const secvalueview2 = document.getElementById('secvalueview');
-const hourhandview2 = document.getElementById('hourhandview');
-const minhandview2 = document.getElementById('minhandview');
-const sechandview2 = document.getElementById('sechandview');
-
+let bool_realtime2 = true;
 let bool_hourvalueview2 = true;
 let bool_minvalueview2 = true;
 let bool_secvalueview2 = true;
 let bool_hourhandview2 = true;
 let bool_minhandview2 = true;
 let bool_sechandview2 = true;
+let bool_hourhandview2_bojo = true;
+let bool_minhandview2_bojo = true;
+let bool_sechandview2_bojo = true;
+
+
+const realtimecheck2 = document.getElementById('realtimecheck');
+const hourvalueview2 = document.getElementById('hourvalueview');
+const minvalueview2 = document.getElementById('minvalueview');
+const secvalueview2 = document.getElementById('secvalueview');
+const hourhandview2 = document.getElementById('hourhandview');
+const minhandview2 = document.getElementById('minhandview');
+const sechandview2 = document.getElementById('sechandview');
+const hourhandview2_bojo = document.getElementById('hourhandview_bojo');
+const minhandview2_bojo = document.getElementById('minhandview_bojo');
+const sechandview2_bojo = document.getElementById('sechandview_bojo');
+
+
+const set_hours2 = Array.from(document.getElementsByClassName('hour'));
+set_hours2.forEach((set_hour2) => set_hour2.addEventListener('click', onSet_hour2));
+function onSet_hour2(event) {
+  //console.log(event.target.dataset.hour);
+  hours2 = event.target.dataset.hour;
+  minutes2 = 0;
+  seconds2 = 0;
+
+  anal_digi_viewClock2();  
+}
+
+const set_minutes2 = Array.from(document.getElementsByClassName('minute'));
+set_minutes2.forEach((set_minute2) => set_minute2.addEventListener('click', onSet_minute2));
+function onSet_minute2(event) {
+  //console.log(event.target.dataset.min);
+  minutes2 = event.target.dataset.min;
+  seconds2 = 0;
+
+  anal_digi_viewClock2();  
+}
+
+const set_updowns2 = Array.from(document.getElementsByClassName('updown'));
+set_updowns2.forEach((set_updown2) => set_updown2.addEventListener('click', onSet_updown2));
+function onSet_updown2(event) {
+  console.log(event.target.dataset.type + "-" + event.target.dataset.updown + "-" + event.target.dataset.interval);
+}
 
 init();
-//digitalTime2();
 
 function init() {
     canvas2 = document.getElementById('clock2');
-    canvas2.width = canvas2.height = 600;
+    canvas2.width = CANVAS_WIDTH2;
+    canvas2.height = CANVAS_HEIGHT2;
     radius2 = canvas2.width /2 * 0.9;
     ctx2 = canvas2.getContext('2d');
 
@@ -33,46 +71,63 @@ function init() {
     
 
     clock2Interval = setInterval( function () {
-        draw();
-        digitalTime2();
+      anal_digi_viewClock2();
     }, 10);
-    //draw();
 }
 
+function anal_digi_viewClock2() {
+  draw();
+  digitalTime2();
+}
+
+let time2;
+
+function nowtime2() {
+  if (bool_realtime2) {
+    time2 = (function () {
+      let midnight = new Date();
+      midnight.setHours(0);
+      midnight.setMinutes(0);
+      midnight.setSeconds(0);
+      midnight.setMilliseconds(0);
+      return Date.now() - midnight.getTime();
+    })();
+    hours2 = time2 / (60 * 60 * 1000);
+    minutes2 = hours2 * 60 % 60;
+    seconds2 = minutes2 * 60 % 60;
+  } else {
+    minutes2 = Math.trunc(minutes2);
+    hours2 = Math.trunc(hours2) + minutes2/60;
+    seconds2 = Math.trunc(seconds2);
+  }
+
+}
+
+
 function draw () {
+  nowtime2();
+   
+  c = {x: canvas2.width / 2, y: canvas2.height / 2};
 
-    let time = (function () {
-            let midnight = new Date();
-            midnight.setHours(0);
-            midnight.setMinutes(0);
-            midnight.setSeconds(0);
-            midnight.setMilliseconds(0);
-            return Date.now() - midnight.getTime();
-        })(),
-        hours = time / (60 * 60 * 1000),
-        minutes = hours * 60 % 60,
-        seconds = minutes * 60 % 60,
-        c = {x: canvas2.width / 2, y: canvas2.height / 2};
+  ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
 
-    ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
-
-    ctx2.lineCap = 'round';
+  ctx2.lineCap = 'round';
     
-    clockdraw();
-    if (bool_hourhandview2) hourHand();
-    if (bool_minhandview2) minuteHand();    
-    if (bool_sechandview2) secondHand();
-    centerdot();
+  clockdraw();
+  if (bool_hourhandview2) hourHand();
+  if (bool_minhandview2) minuteHand();    
+  if (bool_sechandview2) secondHand();
+  centerdot();
 
     //requestAnimationFrame(draw);
 
-    function clockdraw() {
-        border();
-        if (bool_hourvalueview2) number();
-        if (bool_minvalueview2) number_min();
-        if (bool_secvalueview2) number_sec();
-        dot();            
-    }
+  function clockdraw() {
+    border();
+    if (bool_hourvalueview2) number();
+    if (bool_minvalueview2) number_min();
+    if (bool_secvalueview2) number_sec();
+    dot();            
+  }
 
     function border() {
         ctx2.beginPath();
@@ -160,48 +215,83 @@ function draw () {
     }
 
     function secondHand() {
-        ctx2.lineWidth = 3;
-        ctx2.strokeStyle = 'red';
-        ctx2.beginPath();
-        let a = Math.PI * 2 * (seconds / 60) - Math.PI / 2;
-        let v = new Vector(radius2*(sizevalue-0.11), a);
-        let v2 = new Vector(-20, a);
-        ctx2.moveTo(v2.getX() + c.x, v2.getY() + c.y);
-        ctx2.lineTo(v.getX() + c.x, v.getY() + c.y);
-        ctx2.stroke();
+      let a = Math.PI * 2 * (seconds2 / 60) - Math.PI / 2;
+      let v = new Vector(radius2*(sizevalue-0.11), a);
+      let v2 = new Vector(-20, a);
+      let v3 = new Vector(radius2*(sizevalue), a);
+
+      ctx2.lineWidth = 4;
+      ctx2.strokeStyle = 'red';
+      ctx2.beginPath();
+      ctx2.moveTo(v2.getX() + c.x, v2.getY() + c.y);
+      ctx2.lineTo(v.getX() + c.x, v.getY() + c.y);
+      ctx2.stroke();
+
+      if (bool_sechandview2_bojo) {
+      ctx2.lineWidth = 2;
+      ctx2.strokeStyle = 'red';
+      ctx2.beginPath();
+      ctx2.moveTo(v3.getX() + c.x, v3.getY() + c.y);
+      ctx2.lineTo(v.getX() + c.x, v.getY() + c.y);
+      ctx2.stroke();
+    }
     }
 
     function minuteHand() {
-        ctx2.lineWidth = 6;
-        ctx2.strokeStyle = 'blue';
-        ctx2.beginPath();
-        let a = Math.PI * 2 * (minutes / 60) - Math.PI / 2;
-        let v = new Vector(radius2*(sizevalue-0.18), a);
-        ctx2.moveTo(c.x, c.y);
-        ctx2.lineTo(v.getX() + c.x, v.getY() + c.y);
-        ctx2.stroke();
+      let a = Math.PI * 2 * (minutes2 / 60) - Math.PI / 2;
+      let v = new Vector(radius2*(sizevalue-0.18), a);
+      let v3 = new Vector(radius2*(sizevalue-0.00), a);
+      
+      ctx2.lineWidth = 7;
+      ctx2.strokeStyle = 'blue';
+      ctx2.beginPath();
+      ctx2.moveTo(c.x, c.y);
+      ctx2.lineTo(v.getX() + c.x, v.getY() + c.y);
+      ctx2.stroke();
+
+      if (bool_minhandview2_bojo) {
+      ctx2.lineWidth = 2;
+      ctx2.strokeStyle = 'blue';
+      ctx2.beginPath();
+      ctx2.moveTo(c.x, c.y);
+      ctx2.lineTo(v3.getX() + c.x, v3.getY() + c.y);
+      ctx2.stroke();      
+    }
     }
 
     function hourHand() {
-        ctx2.lineWidth = 9;
-        ctx2.strokeStyle = 'green';
-        ctx2.beginPath();
-        let a = Math.PI * 2 * (hours / 12) - Math.PI / 2;
-        let v = new Vector(radius2*(sizevalue-0.25), a);
-        ctx2.moveTo(c.x, c.y);
-        ctx2.lineTo(v.getX() + c.x, v.getY() + c.y);
-        ctx2.stroke();
+      let a = Math.PI * 2 * (hours2 / 12) - Math.PI / 2;
+      let v = new Vector(radius2*(sizevalue-0.25), a);
+      let v3 = new Vector(radius2*(sizevalue), a);
+
+      ctx2.lineWidth = 10;
+      ctx2.strokeStyle = 'green';
+      ctx2.beginPath();
+      ctx2.moveTo(c.x, c.y);
+      ctx2.lineTo(v.getX() + c.x, v.getY() + c.y);
+      ctx2.stroke();
+
+      if (bool_hourhandview2_bojo) {
+      ctx2.lineWidth = 2;
+      ctx2.strokeStyle = 'green';
+      ctx2.beginPath();
+      ctx2.moveTo(c.x, c.y);
+      ctx2.lineTo(v3.getX() + c.x, v3.getY() + c.y);
+      ctx2.stroke();      
+    }
     }
 }
 
-realtime2.addEventListener("change", function() {
-    if (realtime2.checked) {
+realtimecheck2.addEventListener("change", function() {
+    if (realtimecheck2.checked) {
         clock2Interval = setInterval( function () {
             draw();
             digitalTime2();
         }, 10);
+        bool_realtime2 = true;
     } else {
         clearInterval(clock2Interval);
+        bool_realtime2 = false;
     }
   });
 
@@ -261,64 +351,67 @@ realtime2.addEventListener("change", function() {
     return (zero + num);
   }  
 
-  realtime.addEventListener("change", function() {
-    if (realtime.checked) {
-      clockInterval = setInterval( function () {
-        drawClock();
-        digitalTime();
-      }, 10);
-    } else {
-        clearInterval(clockInterval);
-    }
-  });
-
-
+  
   hourvalueview2.addEventListener("change", function() {
     if (this.checked) bool_hourvalueview2 = true;
     else bool_hourvalueview2 = false;
 
-    draw();
-    digitalTime2();
+    anal_digi_viewClock2();
   });
   
   minvalueview2.addEventListener("change", function() {
     if (this.checked) bool_minvalueview2 = true;
     else bool_minvalueview2 = false;
 
-    draw();
-    digitalTime2();    
+    anal_digi_viewClock2();
   });
   
   secvalueview2.addEventListener("change", function() {
     if (this.checked) bool_secvalueview2 = true;
     else bool_secvalueview2 = false;
 
-    draw();
-    digitalTime2();
+    anal_digi_viewClock2();
   });
   
   hourhandview2.addEventListener("change", function() {
     if (this.checked) bool_hourhandview2 = true;
     else bool_hourhandview2 = false;
 
-    draw();
-    digitalTime2();    
+    anal_digi_viewClock2();
   });
   
   minhandview2.addEventListener("change", function() {
     if (this.checked) bool_minhandview2 = true;
     else bool_minhandview2 = false;
 
-    draw();
-    digitalTime2();    
+    anal_digi_viewClock2(); 
   });
   
   sechandview2.addEventListener("change", function() {
     if (this.checked) bool_sechandview2 = true;
     else bool_sechandview2 = false;
 
-    draw();
-    digitalTime2();    
+    anal_digi_viewClock2();  
   });
   
+  hourhandview2_bojo.addEventListener("change", function() {
+    if (this.checked) bool_hourhandview2_bojo = true;
+    else bool_hourhandview2_bojo = false;
+
+    anal_digi_viewClock2();   
+  });
+  
+  minhandview2_bojo.addEventListener("change", function() {
+    if (this.checked) bool_minhandview2_bojo = true;
+    else bool_minhandview2_bojo = false;
+
+    anal_digi_viewClock2();    
+  });
+  
+  sechandview2_bojo.addEventListener("change", function() {
+    if (this.checked) bool_sechandview2_bojo = true;
+    else bool_sechandview2_bojo = false;
+
+    anal_digi_viewClock2();  
+  });
   

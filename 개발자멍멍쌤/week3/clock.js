@@ -1,27 +1,84 @@
-let canvas, ctx;
 const CANVAS_WIDTH = 600;
 const CANVAS_HEIGHT = 600;
 const RADIUS = CANVAS_HEIGHT / 2;
+
+let canvas, ctx;
 let clockInterval;
-const realtime = document.getElementById('realtime');
-
-const hourvalueview = document.getElementById('hourvalueview');
-const minvalueview = document.getElementById('minvalueview');
-const secvalueview = document.getElementById('secvalueview');
-const hourhandview = document.getElementById('hourhandview');
-const minhandview = document.getElementById('minhandview');
-const sechandview = document.getElementById('sechandview');
-
+let secondsDegrees,minutesDegrees,hoursDegrees;
+let currentTime,seconds,minutes,hours;
+let bool_realtime = true;
 let bool_hourvalueview = true;
 let bool_minvalueview = true;
 let bool_secvalueview = true;
 let bool_hourhandview = true;
 let bool_minhandview = true;
 let bool_sechandview = true;
+let bool_hourhandview_bojo = true;
+let bool_minhandview_bojo = true;
+let bool_sechandview_bojo = true;
 
+const realtimecheck = document.getElementById('realtimecheck');
+const hourvalueview = document.getElementById('hourvalueview');
+const minvalueview = document.getElementById('minvalueview');
+const secvalueview = document.getElementById('secvalueview');
+const hourhandview = document.getElementById('hourhandview');
+const minhandview = document.getElementById('minhandview');
+const sechandview = document.getElementById('sechandview');
+const hourhandview_bojo = document.getElementById('hourhandview_bojo');
+const minhandview_bojo = document.getElementById('minhandview_bojo');
+const sechandview_bojo = document.getElementById('sechandview_bojo');
+
+const set_hours = Array.from(document.getElementsByClassName('hour'));
+set_hours.forEach((set_hour) => set_hour.addEventListener('click', onSet_hour));
+function onSet_hour(event) {
+  //console.log(event.target.dataset.hour);
+  hours = event.target.dataset.hour;
+  minutes = 0;
+  seconds = 0;
+  
+  anal_digi_viewClock();
+}
+
+const set_minutes = Array.from(document.getElementsByClassName('minute'));
+set_minutes.forEach((set_minute) => set_minute.addEventListener('click', onSet_minute));
+function onSet_minute(event) {
+  //console.log(event.target.dataset.min);
+  minutes = event.target.dataset.min;
+  seconds = 0;
+  
+  anal_digi_viewClock();
+}
+
+const set_updowns = Array.from(document.getElementsByClassName('updown'));
+set_updowns.forEach((set_updown) => set_updown.addEventListener('click', onSet_updown));
+function onSet_updown(event) {
+  console.log(event.target.dataset.type + "-" + event.target.dataset.updown + "-" + event.target.dataset.interval);
+
+  switch (event.target.dataset.type) {
+    case "hour":
+      if (event.target.dataset.updown==="up") 
+        hours+=parseInt(event.target.dataset.interval);
+      else
+        hours-=parseInt(event.target.dataset.interval);
+      break;
+    case "min":
+      if (event.target.dataset.updown==="up") 
+        minutes+=parseInt(event.target.dataset.interval);
+      else
+        minutes-=parseInt(event.target.dataset.interval);
+      break;
+    case "sec":
+      if (event.target.dataset.updown==="up") 
+        seconds+=parseInt(event.target.dataset.interval);
+      else
+        seconds-=parseInt(event.target.dataset.interval);
+      break;
+  }
+
+  anal_digi_viewClock();
+}
 
 init();
-//digitalTime();
 
 function init () {
   canvas = document.getElementById('clock');
@@ -37,33 +94,40 @@ function init () {
   ctx.textAlign = "center";
 
   clockInterval = setInterval( function () {
-    drawClock();
-    digitalTime();
+    anal_digi_viewClock();
   }, 10);
 }
 
-function drawClock() {
+function anal_digi_viewClock() {
+  viewClock();
+  digitalTime();
+}
+
+function viewClock() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawFrame();
   if (bool_hourvalueview) drawNumbers2();
   if (bool_minvalueview) drawNumbers_min();
   if (bool_secvalueview) drawNumbers_sec();
   //console.log(bool_secvalueview);
-  nowtime();
+  drawClock();
 
   //requestAnimationFrame(drawClock);
 }
 
-let secondsDegrees;
-let minutesDegrees;
-let hoursDegrees;
-
 function nowtime() {
-  // get current time
-  let currentTime = new Date();
-  let seconds = currentTime.getSeconds();
-  let minutes = currentTime.getMinutes();
-  let hours = currentTime.getHours();
+  if (bool_realtime) {
+
+    currentTime = new Date();
+    seconds = currentTime.getSeconds();
+    minutes = currentTime.getMinutes();
+    hours = currentTime.getHours();
+    //console.log("1:"+hours +":"+ minutes +":"+ seconds);
+  }
+}
+
+function drawClock() {
+  nowtime();
 
   // determine the degree of angle in which each clock hand is there
   secondsDegrees = (seconds - 15) * 6;
@@ -86,12 +150,24 @@ function hourhand() {
     // hour hand
     ctx.beginPath();    
     ctx.moveTo(0, 0);
-    ctx.lineWidth = 9;    
+    ctx.lineWidth = 10;    
     ctx.strokeStyle = "green";  
     drawHand(ctx, hoursDegrees, RADIUS * 0.67); // hour hand is 0.6 times of radius
     ctx.stroke();
     ctx.closePath();
+
+  if (bool_hourhandview_bojo) {
+    ctx.beginPath();    
+    ctx.moveTo(0, 0);
+    ctx.lineWidth = 2;    
+    ctx.strokeStyle = "green";  
+    drawHand(ctx, hoursDegrees, RADIUS * 0.9); // hour hand is 0.6 times of radius
+    ctx.stroke();
+    ctx.closePath();
+  }
 }
+
+
 
 function minhand() {
   //분침 보정
@@ -101,10 +177,20 @@ function minhand() {
   ctx.beginPath();    
   ctx.moveTo(0, 0);
   ctx.strokeStyle = "blue";
-  ctx.lineWidth = 6;  
+  ctx.lineWidth = 7;  
   drawHand(ctx, minutesDegrees, RADIUS * 0.73); // minute hand is 0.85 times of radius
   ctx.stroke();
   ctx.closePath();
+
+  if (bool_minhandview_bojo) {
+    ctx.beginPath();    
+    ctx.moveTo(0, 0);
+    ctx.strokeStyle = "blue";
+    ctx.lineWidth = 2;  
+    drawHand(ctx, minutesDegrees, RADIUS * 0.9); // minute hand is 0.85 times of radius
+    ctx.stroke();
+    ctx.closePath();
+  }
 }
 
 function sechand() {
@@ -112,10 +198,20 @@ function sechand() {
   ctx.beginPath();  
   ctx.moveTo(0, 0);
   ctx.strokeStyle = "red";
-  ctx.lineWidth = 3;
+  ctx.lineWidth = 4;
   drawHand(ctx, secondsDegrees, RADIUS * 0.80); // second hand is 0.75 times of radius
   ctx.stroke();
   ctx.closePath();
+
+  if (bool_sechandview_bojo) {
+    ctx.beginPath();  
+    ctx.moveTo(0, 0);
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 2;
+    drawHand(ctx, secondsDegrees, RADIUS * 0.9); // second hand is 0.75 times of radius
+    ctx.stroke();
+    ctx.closePath();
+  }
 }
 
 function drawHand(ctx, angleInDegrees, r) {
@@ -231,17 +327,6 @@ function drawFrame() {
   }
 }
 
-realtime.addEventListener("change", function() {
-  if (realtime.checked) {
-    clockInterval = setInterval( function () {
-      drawClock();
-      digitalTime();
-    }, 10);
-  } else {
-      clearInterval(clockInterval);
-  }
-});
-
 function digitalTime() {
   var dateInfo = new Date();
 
@@ -275,15 +360,16 @@ function zeroPadding(num) {
   return (zero + num);
 }  
 
-
-realtime.addEventListener("change", function() {
-  if (realtime.checked) {
+realtimecheck.addEventListener("change", function() {
+  if (this.checked) {
     clockInterval = setInterval( function () {
-      drawClock();
+      viewClock();
       digitalTime();
     }, 10);
+    bool_realtime = true;    
   } else {
-      clearInterval(clockInterval);
+    clearInterval(clockInterval);
+    bool_realtime = false;
   }
 });
 
@@ -291,47 +377,64 @@ hourvalueview.addEventListener("change", function() {
   if (this.checked) bool_hourvalueview = true;
   else bool_hourvalueview = false;
   
-  drawClock();
-  digitalTime();
+  anal_digi_viewClock();
 });
 
 minvalueview.addEventListener("change", function() {
   if (this.checked) bool_minvalueview = true;
   else bool_minvalueview = false;
 
-  drawClock();
-  digitalTime();
+  anal_digi_viewClock();
 });
 
 secvalueview.addEventListener("change", function() {
   if (this.checked) bool_secvalueview = true;
   else bool_secvalueview = false;
 
-  drawClock();
-  digitalTime();
+  anal_digi_viewClock();
 });
 
 hourhandview.addEventListener("change", function() {
   if (this.checked) bool_hourhandview = true;
   else bool_hourhandview = false;
 
-  drawClock();
-  digitalTime();
+  anal_digi_viewClock();
 });
 
 minhandview.addEventListener("change", function() {
   if (this.checked) bool_minhandview = true;
   else bool_minhandview = false;
 
-  drawClock();
-  digitalTime();
+  anal_digi_viewClock();
 });
 
 sechandview.addEventListener("change", function() {
   if (this.checked) bool_sechandview = true;
   else bool_sechandview = false;
 
-  drawClock();
-  digitalTime();
+  anal_digi_viewClock();
 });
+
+hourhandview_bojo.addEventListener("change", function() {
+  if (this.checked) bool_hourhandview_bojo = true;
+  else bool_hourhandview_bojo = false;
+
+  anal_digi_viewClock();
+});
+
+minhandview_bojo.addEventListener("change", function() {
+  if (this.checked) bool_minhandview_bojo = true;
+  else bool_minhandview_bojo = false;
+
+  anal_digi_viewClock();
+});
+
+sechandview_bojo.addEventListener("change", function() {
+  if (this.checked) bool_sechandview_bojo = true;
+  else bool_sechandview_bojo = false;
+
+  anal_digi_viewClock();
+});
+
+
 
