@@ -43,7 +43,27 @@ canvas {
     transition:transform ease-in-out .1s;
 }
 
-.color-option:hover {
+.stamp-options {
+    display: flex;
+    flex-direction: column;
+    gap:15px
+}
+.stamp-option {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    cursor: pointer;
+    border: 5px solid white;
+    transition:transform ease-in-out .1s;
+}
+
+.stamp-current {
+    width: 70px;
+    height: 70px;
+}
+
+.color-option:hover,
+.stamp-option:hover {
     transform: scale(1.5);
 }
 
@@ -70,6 +90,7 @@ input#text {
     padding: 10px 0px;
     border-radius: 10px;
     font-weight: 500;
+    font-size: 9px;
     text-align: center;
     background-color: white;
 }

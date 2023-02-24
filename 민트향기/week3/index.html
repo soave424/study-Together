@@ -1,13 +1,25 @@
 <!DOCTYPE html>
 <html lang="ko">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./style.css" rel="stylesheet" />
-    <title>Document</title>
+    <title>1분 코딩 canvas 강의 리뷰</title>
   </head>
   <body>
+    <h2>video</h2>
+    <video  class="video" src="./source/sample.mp4" autoplay muted loop></video>
+    <canvas class="canvas-video" width="600" height="400"></canvas>
+    <div class="btns">
+      <button class="btn" data-color='red'>R</button>
+      <button class="btn" data-color='green'>G</button>
+      <button class="btn" data-color='blue'>B</button>
+      <button class="btn" data-color=''>Reset</button>
+    </div>
+
+
+    <h2>transform</h2>
+    <canvas class="canvas-transform" width="500" height="300"></canvas>
+    <h2>interaction</h2>
+    <canvas class="canvas-interaction" width="500" height="300"></canvas>
     <script src="js/main.js"></script>
   </body>
 </html>

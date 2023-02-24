@@ -1,3 +1,6 @@
+const stampOptions = Array.from(
+	document.getElementsByClassName("stamp-option")
+);
 const saveBtn = document.getElementById("save") 
 const textInput = document.getElementById("text");
 const fileInput = document.getElementById("file");
@@ -19,6 +22,7 @@ canvas.width = CANVAS_WIDTH;
 canvas.height = CANVAS_HEIGHT;
 
 ctx.linewidth = lineWidth.value;
+ctx.lineCap = "round";
 
 let isPainting = false;
 let isFilling = false;
@@ -66,10 +70,10 @@ function onColorClick(e) {
 function onModeClick() {
 	if (isFilling) {
 		isFilling = false;
-		modeBtn.innerText = "Fill";
+		modeBtn.innerText = "채우기모드";
 	} else {
 		isFilling = true;
-		modeBtn.innerText = "Draw";
+		modeBtn.innerText = "그리기모드";
 	}
 }
 function onChangeColor(e) {
@@ -109,7 +113,7 @@ function onDoubleClick(e) {
 	if (text !== "") {
 		ctx.save();
 		ctx.lineWidth = 1;
-		ctx.font = "58px serif"
+		ctx.font = "bold 58px serif"
 		ctx.fillText(text,e.offsetX, e.offsetY);
 		ctx.restore();
 	}
@@ -128,7 +132,7 @@ canvas.addEventListener("mousedown", startPainting);
 canvas.addEventListener("mouseup", cancelPainting);
 canvas.addEventListener("mouseleave", cancelPainting);
 canvas.addEventListener("click", onCanvasClick);
-
+canvas.addEventListener("dblclick", onStampPainting);
 lineWidth.addEventListener("change", onLineWidthChange);
 color.addEventListener("change", onChangeColor);
 
@@ -139,3 +143,17 @@ destroyBtn.addEventListener("click", onDestroyClick);
 earaserBtn.addEventListener("click", onEraserClick);
 fileInput.addEventListener("change", onFileChange);
 saveBtn.addEventListener("click", onSaveClick);
+
+stampOptions.forEach((stamp) => stamp.addEventListener("click", onStampClick));
+
+const imgElem = new Image();
+function onStampClick(e) {
+	document.querySelector(".stamp-current").src = e.target.src;
+	imgElem.src = e.target.src;
+}
+
+function onStampPainting(e) {
+	ctx.drawImage(imgElem, e.offsetX, e.offsetY, 100, 100);
+}
+
+
