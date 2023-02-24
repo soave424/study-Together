@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <fieldset>
+      <legend>Color</legend>
+      <input id="startcolor" type="color" onchange="changeBg(event)" />
+      <input id="endcolor" type="color" onchange="changeBg(event)" />
+    </fieldset>
+    <fieldset>
+      <legend>타입</legend>
+      <input
+        type="radio"
+        name="type"
+        value="linear"
+        onchange="changeBg(event)"
+      />
+      선형
+      <input
+        type="radio"
+        name="type"
+        value="radial"
+        checked
+        onchange="changeBg(event)"
+      />
+      방사형
+      <input
+        type="radio"
+        name="type"
+        value="conic"
+        onchange="changeBg(event)"
+      />
+      각진 원형
+      <br />
+      <input
+        type="checkbox"
+        name="repeat"
+        value="repeat"
+        onchange="changeBg(event)"
+      />
+      반복
+    </fieldset>
+    <script src="./js/bg.js"></script>
+  </body>
+</html>

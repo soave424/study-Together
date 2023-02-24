@@ -1,13 +1,29 @@
 <!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="./style.css" rel="stylesheet" />
-    <title>Document</title>
-  </head>
-  <body>
-    <script src="js/main.js"></script>
-  </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<body>
+  <div id="timeDiv">
+  </div>
+  <div id="table">
+    <h2>TimeTable</h2>
+    <canvas></canvas>
+  </div>
+  <div id="subjects">
+    <input type="text" placeholder="추가할 과목을 쓰시오." maxlength="3" id="subjectInput">
+    <div id="newBtns">
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+  <script src="subject.js"></script>
+  <script src="addsubject.js"></script>
+  <!-- <script src="time.js"></script> -->
+
+</body>
 </html>
