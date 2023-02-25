@@ -8,6 +8,67 @@
     <title>Document</title>
   </head>
   <body>
+    <canvas></canvas>
+    <div class="optionContainer">
+      <h1 style="color: white">Line Width</h1>
+      <input type="range" step="0.1" id="lineWidth" min="0" max="10" />
+      <input type="color" id="color" />
+      <div
+        class="colorOption"
+        style="
+          background-color: #e2d810;
+          width: 50px;
+          height: 50px;
+          cursor: pointer;
+          display: none;
+        "
+        data-color="#e2d810"
+      ></div>
+      <div
+        class="colorOption"
+        style="
+          background-color: #d9138a;
+          width: 50px;
+          height: 50px;
+          cursor: pointer;
+          display: none;
+        "
+        data-color="#d9138a"
+      ></div>
+      <div
+        class="colorOption"
+        style="
+          background-color: #12a4d9;
+          width: 50px;
+          height: 50px;
+          cursor: pointer;
+          display: none;
+        "
+        data-color="#12a4d9"
+      ></div>
+      <div
+        class="colorOption"
+        style="
+          background-color: #322e2f;
+          width: 50px;
+          height: 50px;
+          cursor: pointer;
+          display: none;
+        "
+        data-color="#322e2f"
+      ></div>
+      <button id="eraser">Eraser</button>
+      <button id="clear">Clear</button>
+      <label for="file">
+        <input type="file" id="file" />
+      </label>
+      <label for="text">
+        <input type="text" id="text" placeholder="Write your text" />
+      </label>
+
+      <button id="save">Save</button>
+    </div>
+
     <script src="js/main.js"></script>
   </body>
 </html>
