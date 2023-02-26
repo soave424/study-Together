@@ -11,19 +11,21 @@
   <div id="timeDiv">
   </div>
   <div id="table">
-    <h2>TimeTable</h2>
+    <h2>학급 시간표</h2>
     <canvas></canvas>
+    <button id="save">시간표 저장하기</button>
   </div>
   <div id="subjects">
     <input type="text" placeholder="추가할 과목을 쓰시오." maxlength="3" id="subjectInput">
     <div id="newBtns">
     </div>
+    <p class="trashcan">🗑</p>
   </div>
 
   <script src="app.js"></script>
   <script src="subject.js"></script>
   <script src="addsubject.js"></script>
-  <!-- <script src="time.js"></script> -->
-
+  <script src="save.js"></script>
+  <script type="module" src="deletesubject.js"></script> 
 </body>
 </html>

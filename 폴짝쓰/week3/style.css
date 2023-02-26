@@ -2,9 +2,13 @@ body{
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  font-size: 20px;
 }
 
 #table{
+  display:flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -33,6 +37,32 @@ canvas{
   border-color: white;
   color:white;
   font-size: 15px;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  background-color: #92a8d1;
+  cursor: move;
+}
+
+#save{
+  margin: 5px;
+  width: 130px;
+  height: 35px;
+  border-radius: 5px;
+  border-color: white;
+  color:white;
+  font-size: 15px;
   background-color: #92a8d1;
 }
+
+.trashcan{
+  font-size: 50px;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.dragging {
+  opacity: .5;
+}
+
+.trashcan.dragover {
+  font-size: 70px;
+}
+
