@@ -17,7 +17,8 @@ function addSubject(event){
       const yPlace = 160+(100*j);
       const allX = ((100+plus)<=X)&(X<=(220+plus));
       if(allX&yS[j]){
-        ctx.fillRect(120+plus, yPlace-30, 90, 40);
+        ctx.clearRect(120+plus, yPlace-30, 90, 40);
+        // ctx.fillRect(120+plus, yPlace-30, 90, 40);
         ctx.fillStyle = "black";
         ctx.fillText(text, 130+plus, yPlace);
       }

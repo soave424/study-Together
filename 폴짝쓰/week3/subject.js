@@ -1,4 +1,5 @@
 //과목 추가하기
+// import { deleteSubject } from "./deletesubject.js";
 
 const newBtnsDiv = document.querySelector("#newBtns");
 let subjectInput = document.querySelector("#subjectInput");
@@ -15,12 +16,14 @@ if(savedSubjects){
 
 function paintSubjects(newSubjectobj){
   const newSubjectBtn = document.createElement("button");
+  newSubjectBtn.setAttribute("draggable", true);
   newSubjectBtn.innerText = newSubjectobj.text;
   newBtnsDiv.appendChild(newSubjectBtn);
 
   const newButtons = newBtnsDiv.querySelectorAll("button"); 
   const array = Array.from(newButtons);
   array.forEach(item => item.addEventListener("click", changeText));
+
 }
 
 function changeText(event){
