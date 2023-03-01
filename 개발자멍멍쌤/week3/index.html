@@ -10,14 +10,32 @@
 </head>
 
 <body>
-  <div>
+  <div style="flex-direction: row;display: flex;justify-content: center;width: 100%;">
     <canvas id="clock"></canvas>
-    <canvas id="clock2"></canvas>
     <div style="flex-direction: column;">
-      <label for="realtimecheck">
-        <input type="checkbox" id="realtimecheck" checked />실시간
-      </label>
-      <br>
+      <div class="digitalclock">
+        <span class="ampm"></span>
+        <span class="hms"></span>
+        <span class="millisec" style="display: inline;"></span>
+      </div>
+      <div style="flex-direction: row;">
+        <label for="realtimecheck">
+          <input type="checkbox" id="realtimecheck" checked />실시간
+        </label>
+        <label for="continuemode">
+          <input type="checkbox" id="continuemode" checked /> 연속
+        </label>
+        <label for="darkmode">
+          <input type="checkbox" id="darkmode" checked /> 주야
+        </label>
+        <label for="sunmoonmode">
+          <input type="checkbox" id="sunmoonmode" checked />해와달
+        </label>
+        <label for="hidedigital" style="width: 110px;">
+          <input type="checkbox" id="hidedigital" checked />디지탈시계
+        </label>        
+      </div>
+      <br><br><br>
       <div style="flex-direction: column;">
         <div style="flex-direction: row;">
           <label for="hourvalueview">
@@ -53,7 +71,7 @@
           </label>
         </div>        
       </div>
-      <br>
+      <br><br><br>
       <div style="flex-direction: column;">
         <div style="flex-direction: row;">
           <label class="hour" data-hour="12">12시</label>
@@ -70,9 +88,6 @@
           <label class="hour" data-hour="9">9시</label>
           <label class="hour" data-hour="10">10시</label>
           <label class="hour" data-hour="11">11시</label>          
-        </div>
-        <div style="flex-direction: row;">
-
         </div>
       </div>
       <br>
@@ -94,42 +109,32 @@
           <label class="minute" data-min="55">55분</label>
         </div>
       </div>
-      <br>
+      <br><br><br>
       <div style="flex-direction: column;">
         <div style="flex-direction: row;">
-          <label class="updown" data-type="hour" data-updown="up" data-interval="1">🔼&nbsp;1시간</label>&nbsp;
-          <label class="updown" data-type="hour" data-updown="down" data-interval="1">🔽&nbsp;1시간</label>
+          <label class="updown" data-type="hour" data-updown="up" data-interval="1">&nbsp;🔼&nbsp;1시간</label>&nbsp;
+          <label class="updown" data-type="hour" data-updown="down" data-interval="1">&nbsp;🔽&nbsp;1시간</label>
         </div>
         <div style="flex-direction: row;">
-          <label class="updown" data-type="min" data-updown="up" data-interval="5">🔼&nbsp;&nbsp;5분&nbsp;&nbsp;</label>&nbsp;
-          <label class="updown" data-type="min" data-updown="down" data-interval="5">🔽&nbsp;&nbsp;5분&nbsp;&nbsp;</label>
+          <label class="updown" data-type="min" data-updown="up" data-interval="5">&nbsp;🔼&nbsp;&nbsp;5분&nbsp;&nbsp;</label>&nbsp;
+          <label class="updown" data-type="min" data-updown="down" data-interval="5">&nbsp;🔽&nbsp;&nbsp;5분&nbsp;&nbsp;</label>
         </div>
         <div style="flex-direction: row;">
-          <label class="updown" data-type="min" data-updown="up" data-interval="1">🔼&nbsp;&nbsp;1분&nbsp;&nbsp;</label>&nbsp;
-          <label class="updown" data-type="min" data-updown="down" data-interval="1">🔽&nbsp;&nbsp;1분&nbsp;&nbsp;</label>
+          <label class="updown" data-type="min" data-updown="up" data-interval="1">&nbsp;🔼&nbsp;&nbsp;1분&nbsp;&nbsp;</label>&nbsp;
+          <label class="updown" data-type="min" data-updown="down" data-interval="1">&nbsp;🔽&nbsp;&nbsp;1분&nbsp;&nbsp;</label>
         </div>
         <div style="flex-direction: row;">
-          <label class="updown" data-type="sec" data-updown="up" data-interval="5">🔼&nbsp;&nbsp;5초&nbsp;&nbsp;</label>&nbsp;
-          <label class="updown" data-type="sec" data-updown="down" data-interval="5">🔽&nbsp;&nbsp;5초&nbsp;&nbsp;</label>
+          <label class="updown" data-type="sec" data-updown="up" data-interval="5">&nbsp;🔼&nbsp;&nbsp;5초&nbsp;&nbsp;</label>&nbsp;
+          <label class="updown" data-type="sec" data-updown="down" data-interval="5">&nbsp;🔽&nbsp;&nbsp;5초&nbsp;&nbsp;</label>
         </div>
         <div style="flex-direction: row;">
-          <label class="updown" data-type="sec" data-updown="up" data-interval="1">🔼&nbsp;&nbsp;1초&nbsp;&nbsp;</label>&nbsp;
-          <label class="updown" data-type="sec" data-updown="down" data-interval="1">🔽&nbsp;&nbsp;1초&nbsp;&nbsp;</label>
+          <label class="updown" data-type="sec" data-updown="up" data-interval="1">&nbsp;🔼&nbsp;&nbsp;1초&nbsp;&nbsp;</label>&nbsp;
+          <label class="updown" data-type="sec" data-updown="down" data-interval="1">&nbsp;🔽&nbsp;&nbsp;1초&nbsp;&nbsp;</label>
         </div>                                
       </div>      
     </div>
   </div>
   <br>
-  <div>
-    <div class="digitalclock">
-      <span class="ampm"></span>
-      <span class="hms"></span>
-    </div>
-    <canvas id="digitalclock2"></canvas>
-  </div>
-  <script src="./Vector.js"></script>
   <script src="./clock.js"></script>
-  <script src="./clock2.js"></script>
 </body>
-
 </html>
